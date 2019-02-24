@@ -1,0 +1,8 @@
+[package]
+name = "random-bignum-rust"
+version = "0.1.0"
+authors = ["dylan-thinnes <dylan.thinnes@protonmail.com>"]
+edition = "2018"
+
+[dependencies]
+rand = "0.3.14"
