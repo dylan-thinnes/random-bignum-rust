@@ -38,4 +38,5 @@ fn main() {
             break;
         }
     }
+    println!("")
 }
