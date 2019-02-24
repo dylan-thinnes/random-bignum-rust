@@ -10,10 +10,13 @@ fn main() {
         n = match parse_try {
             Ok(num) => num,
             Err(_)  => {
+                eprintln!("Could not parse number of digits from {}. Please input a number!", input);
                 return;
             },
         };
     } else {
+        eprintln!("No digits specified. Generating random number of digits between 100 and 1000...");
         n = rand::thread_rng().gen_range(100, 1000);
+        eprintln!("{} chosen as number of digits.", n);
     }
 }
