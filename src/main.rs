@@ -21,16 +21,17 @@ fn main() {
     }
 
     let mut r: u64;
+    let mut gen = rand::thread_rng();
     loop {
         if n >= 19 {
-            r = rand::thread_rng().gen_range(1, 10u64.pow(19));
+            r = gen.gen_range(1, 10u64.pow(19));
             print!("{:019}", r);
             
             n -= 19;
         } else {
             loop {
                 if n == 0 { break; }
-                r = rand::thread_rng().gen_range(1, 10);
+                r = gen.gen_range(1, 10);
                 print!("{}", r);
 
                 n -= 1;
