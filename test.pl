@@ -15,7 +15,6 @@ sub float_cell { printf "%${cell_width}.1f", $_[0]; }
 
 @runs = ();
 for my $i ( 0 .. $trials - 1 ) {
-    #$out = `cargo run 1000 2> /dev/null`;
     my $out = `./target/debug/random-bignum-rust $out_length`;
     chomp $out;
     $runs[$i] = $out;
