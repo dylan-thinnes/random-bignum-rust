@@ -31,7 +31,7 @@ fn main() {
         } else {
             loop {
                 if n == 0 { break; }
-                r = gen.gen_range(1, 10);
+                r = gen.gen_range(0, 10);
                 print!("{}", r);
 
                 n -= 1;
