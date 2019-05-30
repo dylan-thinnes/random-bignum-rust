@@ -5,11 +5,13 @@ fn parse_input(args: Vec<String>) -> (u32, u64) {
     let n: u32;
     let mut base: u64 = 10;
 
-    if args.len() > 2 {
-        let input = args[2].trim();
-        base = input.parse().expect("Could not parse a base from the second argument.\
-                                     Please input a number!");
-    }
+    let snd_arg = args.get(2);
+    base = match snd_arg {
+        Some(s) => s.trim().parse()
+                    .expect("Could not parse a base from the second argument.\
+                             Please input a number!"),
+        None => 10
+    };
 
     let fst_arg = args.get(1);
     n = match fst_arg {
