@@ -27,7 +27,8 @@ fn parse_input(args: Vec<String>) -> (u32, u64) {
 }
 
 fn base_table (n: u64) -> Vec<char> {
-    if n > 64 { panic!("Base > 64! Please specify a base below 64."); }
+    if n > 64 { panic!("Base >= 64! Please specify a base at less than or equal to 64."); }
+    if n < 2  { panic!("Base <= 2! Please specify a base at greater than or equal to 2."); }
     let mut table: Vec<u8> = vec![];
     if n > 36 {
         table.extend(b'A'..=b'Z');
