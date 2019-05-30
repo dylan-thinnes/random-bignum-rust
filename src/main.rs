@@ -2,11 +2,11 @@ use rand::Rng;
 use std::env;
 use std::iter::Extend;
 
-fn parse_input(args: Vec<String>) -> (u32, u64) {
+fn parse_input(args: Vec<String>) -> Result<(u32, u64), String> {
     let n: u32 = match args.get(0) {
         Some(s) => s.trim().parse()
-                    .expect("Could not parse number of digits from {}.\
-                             Please input a number!"),
+                    .or(Err("Could not parse number of digits from first argument. \
+                             Please input a number!"))?,
         None => {
             eprintln!("No digits specified. Defaulting to 100.");
             100
@@ -15,20 +15,23 @@ fn parse_input(args: Vec<String>) -> (u32, u64) {
 
     let base: u64 = match args.get(1) {
         Some(s) => s.trim().parse()
-                    .expect("Could not parse a base from the second argument.\
-                             Please input a number!"),
+                    .or(Err("Could not parse a base from the second argument. \
+                             Please input a number!"))?,
         None => {
             eprintln!("No base specified. Defaulting to 10.");
             10
         }
     };
 
-    return (n, base);
+    return Ok((n, base));
 }
 
-fn base_table (n: u64) -> Vec<char> {
-    if n > 64 { panic!("Base >= 64! Please specify a base at less than or equal to 64."); }
-    if n < 2  { panic!("Base <= 2! Please specify a base at greater than or equal to 2."); }
+fn base_table (n: u64) -> Result<Vec<char>,String> {
+    if n > 64 { 
+        Err("Base >= 64! Please specify a base between 2 and 64.")?;
+    } else if n < 2  { 
+        Err("Base <= 2! Please specify a base between 2 and 64.")?;
+    }
     let mut table: Vec<u8> = vec![];
     if n > 36 {
         table.extend(b'A'..=b'Z');
@@ -41,14 +44,14 @@ fn base_table (n: u64) -> Vec<char> {
         table.extend(b'a'..=b'z');
     }
 
-    return table.iter().map(|&x| char::from(x)).collect();
+    return Ok(table.iter().map(|&x| char::from(x)).collect());
 }
 
-fn main() {
+fn run() -> Result<(), String> {
     let args: Vec<_> = env::args().skip(1).collect();
-    let (mut n, base) = parse_input(args);
+    let (mut n, base) = parse_input(args)?;
+    let table = base_table(base)?;
 
-    let table = base_table(base);
     let mut r: u64;
     let mut gen = rand::thread_rng();
 
@@ -68,5 +71,13 @@ fn main() {
         n -= 1;
     }
 
-    println!("")
+    println!("");
+    return Ok(());
+}
+
+fn main() {
+    match run() {
+        Ok(_) => (),
+        Err(s) => eprintln!("{}", s)
+    }
 }
