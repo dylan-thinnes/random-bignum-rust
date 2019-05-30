@@ -26,7 +26,7 @@ fn parse_input(args: Vec<String>) -> (u32, u64) {
     return (n, base);
 }
 
-fn base_table (n: u32) -> Vec<char> {
+fn base_table (n: u64) -> Vec<char> {
     if n > 64 { panic!("Base > 64! Please specify a base below 64."); }
     let mut table: Vec<u8> = vec![];
     if n > 36 {
@@ -47,24 +47,25 @@ fn main() {
     let args: Vec<_> = env::args().skip(1).collect();
     let (mut n, base) = parse_input(args);
 
+    let table = base_table(base);
     let mut r: u64;
     let mut gen = rand::thread_rng();
-    loop {
-        if n >= 19 {
+
+    if base == 10 {
+        while n >= 19 {
             r = gen.gen_range(1, 10u64.pow(19));
             print!("{:019}", r);
             
             n -= 19;
-        } else {
-            loop {
-                if n == 0 { break; }
-                r = gen.gen_range(0, 10);
-                print!("{}", r);
-
-                n -= 1;
-            }
-            break;
         }
     }
+
+    while n > 0 {
+        r = gen.gen_range(0, base);
+        print!("{}", table[r as usize]);
+
+        n -= 1;
+    }
+
     println!("")
 }
