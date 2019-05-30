@@ -5,22 +5,24 @@ fn parse_input(args: Vec<String>) -> (u32, u64) {
     let n: u32;
     let mut base: u64 = 10;
 
-    if args.len() <= 1 {
-        eprintln!("No digits specified. Generating random number of digits between 100 and 1000...");
-        n = rand::thread_rng().gen_range(100, 1000);
-        eprintln!("{} chosen as number of digits.", n);
-    } else {
-        if args.len() > 2 {
-            let input = args[2].trim();
-            base = input.parse().expect("Could not parse a base from the second argument.\
-                                         Please input a number!");
-        }
-
-        let input = args[1].trim();
-        n = input.parse()
-            .expect("Could not parse number of digits from {}.\
-                     Please input a number!");
+    if args.len() > 2 {
+        let input = args[2].trim();
+        base = input.parse().expect("Could not parse a base from the second argument.\
+                                     Please input a number!");
     }
+
+    let fst_arg = args.get(1);
+    n = match fst_arg {
+        Some(s) => s.trim().parse()
+                    .expect("Could not parse number of digits from {}.\
+                             Please input a number!"),
+        None => {
+            eprintln!("No digits specified. Generating random number of digits between 100 and 1000...");
+            let random = rand::thread_rng().gen_range(100, 1000);
+            eprintln!("{} chosen as number of digits.", random);
+            random
+        }
+    };
 
     return (n, base);
 }
