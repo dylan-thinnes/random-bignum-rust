@@ -1,10 +1,10 @@
 use rand::Rng;
 use std::env;
 
-fn main() {
-    let args: Vec<_> = env::args().collect();
-    let mut n: u32;
+fn parse_input(args: Vec<String>) -> (u32, u64) {
+    let n: u32;
     let mut base: u64 = 10;
+
     if args.len() <= 1 {
         eprintln!("No digits specified. Generating random number of digits between 100 and 1000...");
         n = rand::thread_rng().gen_range(100, 1000);
@@ -21,6 +21,13 @@ fn main() {
             .expect("Could not parse number of digits from {}.\
                      Please input a number!");
     }
+
+    return (n, base);
+}
+
+fn main() {
+    let args: Vec<_> = env::args().collect();
+    let (mut n, base) = parse_input(args);
 
     let mut r: u64;
     let mut gen = rand::thread_rng();
