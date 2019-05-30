@@ -4,7 +4,24 @@ use std::env;
 fn main() {
     let args: Vec<_> = env::args().collect();
     let mut n: u32;
-    if args.len() > 1 {
+    let mut base: u64 = 10;
+    if args.len() == 0 {
+        eprintln!("No digits specified. Generating random number of digits between 100 and 1000...");
+        n = rand::thread_rng().gen_range(100, 1000);
+        eprintln!("{} chosen as number of digits.", n);
+    } else {
+        if args.len() > 2 {
+            let input = args[2].trim();
+            let parse_try = input.parse();
+            base = match parse_try {
+                Ok(num) => num,
+                Err(_)  => {
+                    eprintln!("Could not parse a base from {}. Please input a number!", input);
+                    return;
+                },
+            };
+        }
+
         let input = args[1].trim();
         let parse_try = input.parse();
         n = match parse_try {
@@ -14,10 +31,6 @@ fn main() {
                 return;
             },
         };
-    } else {
-        eprintln!("No digits specified. Generating random number of digits between 100 and 1000...");
-        n = rand::thread_rng().gen_range(100, 1000);
-        eprintln!("{} chosen as number of digits.", n);
     }
 
     let mut r: u64;
