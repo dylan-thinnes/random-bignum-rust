@@ -7,10 +7,8 @@ fn parse_input(args: Vec<String>) -> (u32, u64) {
                     .expect("Could not parse number of digits from {}.\
                              Please input a number!"),
         None => {
-            eprintln!("No digits specified. Generating random number of digits between 100 and 1000...");
-            let random = rand::thread_rng().gen_range(100, 1000);
-            eprintln!("{} chosen as number of digits.", random);
-            random
+            eprintln!("No digits specified. Defaulting to 100.");
+            100
         }
     };
 
@@ -18,7 +16,10 @@ fn parse_input(args: Vec<String>) -> (u32, u64) {
         Some(s) => s.trim().parse()
                     .expect("Could not parse a base from the second argument.\
                              Please input a number!"),
-        None => 10
+        None => {
+            eprintln!("No base specified. Defaulting to 10.");
+            10
+        }
     };
 
     return (n, base);
