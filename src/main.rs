@@ -1,5 +1,6 @@
 use rand::Rng;
 use std::env;
+use std::iter::Extend;
 
 fn parse_input(args: Vec<String>) -> (u32, u64) {
     let n: u32 = match args.get(0) {
@@ -23,6 +24,23 @@ fn parse_input(args: Vec<String>) -> (u32, u64) {
     };
 
     return (n, base);
+}
+
+fn base_table (n: u32) -> Vec<char> {
+    if n > 64 { panic!("Base > 64! Please specify a base below 64."); }
+    let mut table: Vec<u8> = vec![];
+    if n > 36 {
+        table.extend(b'A'..=b'Z');
+        table.extend(b'a'..=b'z');
+        table.extend(b'0'..=b'9');
+        table.push(b'+');
+        table.push(b'/');
+    } else {
+        table.extend(b'0'..=b'9');
+        table.extend(b'a'..=b'z');
+    }
+
+    return table.iter().map(|&x| char::from(x)).collect();
 }
 
 fn main() {
