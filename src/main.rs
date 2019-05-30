@@ -12,25 +12,14 @@ fn main() {
     } else {
         if args.len() > 2 {
             let input = args[2].trim();
-            let parse_try = input.parse();
-            base = match parse_try {
-                Ok(num) => num,
-                Err(_)  => {
-                    eprintln!("Could not parse a base from {}. Please input a number!", input);
-                    return;
-                },
-            };
+            base = input.parse().expect("Could not parse a base from the second argument.\
+                                         Please input a number!");
         }
 
         let input = args[1].trim();
-        let parse_try = input.parse();
-        n = match parse_try {
-            Ok(num) => num,
-            Err(_)  => {
-                eprintln!("Could not parse number of digits from {}. Please input a number!", input);
-                return;
-            },
-        };
+        n = input.parse()
+            .expect("Could not parse number of digits from {}.\
+                     Please input a number!");
     }
 
     let mut r: u64;
