@@ -5,16 +5,14 @@ fn parse_input(args: Vec<String>) -> (u32, u64) {
     let n: u32;
     let base: u64;
 
-    let snd_arg = args.get(2);
-    base = match snd_arg {
+    base = match args.get(2) {
         Some(s) => s.trim().parse()
                     .expect("Could not parse a base from the second argument.\
                              Please input a number!"),
         None => 10
     };
 
-    let fst_arg = args.get(1);
-    n = match fst_arg {
+    n = match args.get(1) {
         Some(s) => s.trim().parse()
                     .expect("Could not parse number of digits from {}.\
                              Please input a number!"),
