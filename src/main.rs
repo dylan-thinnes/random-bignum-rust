@@ -5,7 +5,7 @@ fn main() {
     let args: Vec<_> = env::args().collect();
     let mut n: u32;
     let mut base: u64 = 10;
-    if args.len() == 0 {
+    if args.len() <= 1 {
         eprintln!("No digits specified. Generating random number of digits between 100 and 1000...");
         n = rand::thread_rng().gen_range(100, 1000);
         eprintln!("{} chosen as number of digits.", n);
