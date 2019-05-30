@@ -3,7 +3,7 @@ use std::env;
 
 fn parse_input(args: Vec<String>) -> (u32, u64) {
     let n: u32;
-    let mut base: u64 = 10;
+    let base: u64;
 
     let snd_arg = args.get(2);
     base = match snd_arg {
